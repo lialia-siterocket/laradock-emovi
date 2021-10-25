@@ -426,10 +426,12 @@ RUN if [ ${INSTALL_XDEBUG} = false -a ${INSTALL_BLACKFIRE} = true ]; then \
 # ssh:
 ###########################################################################
 
-ARG INSTALL_WORKSPACE_SSH=false
+ARG INSTALL_WORKSPACE_SSH=true
 
 COPY insecure_id_rsa /tmp/id_rsa
 COPY insecure_id_rsa.pub /tmp/id_rsa.pub
+
+RUN echo 'INSTALL_WORKSPACE_SSH='${INSTALL_WORKSPACE_SSH} && sleep 5
 
 RUN if [ ${INSTALL_WORKSPACE_SSH} = true ]; then \
     rm -f /etc/service/sshd/down && \
@@ -1196,6 +1198,7 @@ ARG IMAGEMAGICK_VERSION=latest
 ENV IMAGEMAGICK_VERSION ${IMAGEMAGICK_VERSION}
 
 RUN if [ ${INSTALL_IMAGEMAGICK} = true ]; then \
+    apt-get update -yqq && \
     apt-get install -y libmagickwand-dev imagemagick && \
     if [ $(php -r "echo PHP_MAJOR_VERSION;") = "8" ]; then \
       apt-get install -y git && \

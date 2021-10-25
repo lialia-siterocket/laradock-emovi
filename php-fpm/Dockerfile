@@ -62,6 +62,9 @@ RUN set -xe; \
       docker-php-ext-install zip && \
       php -m | grep -q 'zip'
 
+# Install nc (netcat) & ssh client
+RUN apt-get update -yqq && apt-get install -yqq netcat ssh
+
 #
 #--------------------------------------------------------------------------
 # Optional Software's Installation
@@ -769,6 +772,7 @@ ARG IMAGEMAGICK_VERSION=latest
 ENV IMAGEMAGICK_VERSION ${IMAGEMAGICK_VERSION}
 
 RUN if [ ${INSTALL_IMAGEMAGICK} = true ]; then \
+    apt-get update -yqq && \
     apt-get install -yqq libmagickwand-dev imagemagick && \
     if [ $(php -r "echo PHP_MAJOR_VERSION;") = "8" ]; then \
       cd /tmp && \
