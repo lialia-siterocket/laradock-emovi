@@ -343,7 +343,7 @@ RUN if [ ${INSTALL_XDEBUG} = true ]; then \
           pecl install xdebug-2.9.8; \
         else \
           if [ $(php -r "echo PHP_MAJOR_VERSION;") = "7" ]; then \
-            pecl install xdebug-2.9.8; \
+            pecl install xdebug-2.9.0; \
           else \
             #pecl install xdebug; \
             echo "xDebug 3 required, not supported."; \
